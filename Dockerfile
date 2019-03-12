@@ -21,6 +21,8 @@ RUN apk add py2-pip
 RUN pip install shadowsocks
 RUN apk add privoxy
 
+# solve AttributeError: /usr/local/ssl/lib/libcrypto.so.1.1: undefined symbol: EVP_CIPHER_CTX_cleanup 
+RUN sed -i '1,$s/CIPHER_CTX_cleanup/CIPHER_CTX_reset/g' /usr/lib/python2.7/site-packages/shadowsocks/crypto/openssl.py
 
 # copy configure file
 ADD ./sslocal/sslocal.sh /sslocal.sh
